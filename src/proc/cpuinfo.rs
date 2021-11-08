@@ -57,7 +57,7 @@ pub struct Processor {
 }
 
 impl Processor {
-    pub fn new<'a>(processor_map: &HashMap<String, String>) -> Processor {
+    pub fn new(processor_map: &HashMap<String, String>) -> Processor {
         Processor {
             processor: processor_map.get_member("processor"),
             vendor_id: processor_map.get_member("vendor_id"),
