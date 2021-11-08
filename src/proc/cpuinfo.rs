@@ -1,8 +1,29 @@
 use std::collections::HashMap;
 use std::fs::read_to_string;
 
+trait HashMapMember {
+    fn get_member(&self, member: &str) -> Option<String>;
+}
+
+impl HashMapMember for HashMap<String, String> {
+    fn get_member(self: &HashMap<String, String>, member: &str) -> Option<String> {
+        match self.get(&member.to_string()) {
+            Some(m) => Some(m.clone()),
+            None => None,
+        }
+    }
+}
+
 pub struct CPUInfo {
     pub processors: Vec<Processor>,
+}
+
+impl CPUInfo {
+    pub fn new() -> CPUInfo {
+        CPUInfo {
+            processors: get_processors().unwrap(),
+        }
+    }
 }
 
 pub struct Processor {
@@ -35,19 +56,6 @@ pub struct Processor {
     power_management: Option<String>,
 }
 
-trait HashMapMember {
-    fn get_member(&self, member: &str) -> Option<String>;
-}
-
-impl HashMapMember for HashMap<String, String> {
-    fn get_member(self: &HashMap<String, String>, member: &str) -> Option<String> {
-        match self.get(&member.to_string()) {
-            Some(m) => Some(m.clone()),
-            None => None,
-        }
-    }
-}
-
 impl Processor {
     pub fn new<'a>(processor_map: &HashMap<String, String>) -> Processor {
         Processor {
@@ -78,14 +86,6 @@ impl Processor {
             cache_alignment: processor_map.get_member("cache_alignment"),
             address_sizes: processor_map.get_member("address_sizes"),
             power_management: processor_map.get_member("power_management"),
-        }
-    }
-}
-
-impl CPUInfo {
-    pub fn new() -> CPUInfo {
-        CPUInfo {
-            processors: get_processors().unwrap(),
         }
     }
 }
