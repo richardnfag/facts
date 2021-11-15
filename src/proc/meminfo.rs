@@ -1,8 +1,10 @@
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::read_to_string;
 
 use crate::utils::HashMapStr;
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct MemInfo {
     pub mem_total: Option<i64>,
     pub mem_free: Option<i64>,
@@ -118,6 +120,9 @@ impl MemInfo {
             direct_map2m: meminfo.get_from_str("directmap2m"),
             direct_map1g: meminfo.get_from_str("directmap1g"),
         }
+    }
+    pub fn to_json(&self) -> String {
+        serde_json::to_string(self).unwrap()
     }
 }
 

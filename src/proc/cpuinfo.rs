@@ -1,8 +1,10 @@
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs::read_to_string;
 
 use crate::utils::HashMapStr;
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct CPUInfo {
     pub processors: Vec<Processor>,
 }
@@ -13,36 +15,40 @@ impl CPUInfo {
             processors: get_processors().unwrap(),
         }
     }
+    pub fn to_json(&self) -> String {
+        serde_json::to_string(self).unwrap()
+    }
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Processor {
-    processor: Option<String>,
-    vendor_id: Option<String>,
-    cpu_family: Option<String>,
-    model: Option<String>,
-    model_name: Option<String>,
-    stepping: Option<String>,
-    microcode: Option<String>,
-    cpu_mhz: Option<String>,
-    cache_size: Option<String>,
-    physical_id: Option<String>,
-    siblings: Option<String>,
-    core_id: Option<String>,
-    cpu_cores: Option<String>,
-    apicid: Option<String>,
-    initial_apicid: Option<String>,
-    fpu: Option<String>,
-    fpu_exception: Option<String>,
-    cpuid_level: Option<String>,
-    wp: Option<String>,
-    flags: Option<String>,
-    vmx_flags: Option<String>,
-    bugs: Option<String>,
-    bogomips: Option<String>,
-    clflush_size: Option<String>,
-    cache_alignment: Option<String>,
-    address_sizes: Option<String>,
-    power_management: Option<String>,
+    pub processor: Option<String>,
+    pub vendor_id: Option<String>,
+    pub cpu_family: Option<String>,
+    pub model: Option<String>,
+    pub model_name: Option<String>,
+    pub stepping: Option<String>,
+    pub microcode: Option<String>,
+    pub cpu_mhz: Option<String>,
+    pub cache_size: Option<String>,
+    pub physical_id: Option<String>,
+    pub siblings: Option<String>,
+    pub core_id: Option<String>,
+    pub cpu_cores: Option<String>,
+    pub apicid: Option<String>,
+    pub initial_apicid: Option<String>,
+    pub fpu: Option<String>,
+    pub fpu_exception: Option<String>,
+    pub cpuid_level: Option<String>,
+    pub wp: Option<String>,
+    pub flags: Option<String>,
+    pub vmx_flags: Option<String>,
+    pub bugs: Option<String>,
+    pub bogomips: Option<String>,
+    pub clflush_size: Option<String>,
+    pub cache_alignment: Option<String>,
+    pub address_sizes: Option<String>,
+    pub power_management: Option<String>,
 }
 
 impl Processor {
