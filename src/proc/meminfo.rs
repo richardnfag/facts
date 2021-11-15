@@ -1,18 +1,7 @@
 use std::collections::HashMap;
 use std::fs::read_to_string;
 
-trait HashMapMember {
-    fn get_member(&self, member: &str) -> Option<i64>;
-}
-
-impl HashMapMember for HashMap<String, i64> {
-    fn get_member(self: &HashMap<String, i64>, member: &str) -> Option<i64> {
-        match self.get(&member.to_string()) {
-            Some(m) => Some(m.clone()),
-            None => None,
-        }
-    }
-}
+use crate::utils::HashMapStr;
 
 pub struct MemInfo {
     pub mem_total: Option<i64>,
@@ -75,59 +64,59 @@ impl MemInfo {
         let meminfo = get_meminfo().unwrap();
 
         MemInfo {
-            mem_total: meminfo.get_member("memtotal"),
-            mem_free: meminfo.get_member("memfree"),
-            mem_available: meminfo.get_member("memavailable"),
-            buffers: meminfo.get_member("buffers"),
-            cached: meminfo.get_member("cached"),
-            swap_cached: meminfo.get_member("swapcached"),
-            active: meminfo.get_member("active"),
-            inactive: meminfo.get_member("inactive"),
-            active_anon: meminfo.get_member("active_anon"),
-            inactive_anon: meminfo.get_member("inactive_anon"),
-            active_file: meminfo.get_member("active_file"),
-            inactive_file: meminfo.get_member("inactive_file"),
-            unevictable: meminfo.get_member("unevictable"),
-            mlocked: meminfo.get_member("mlocked"),
-            swap_total: meminfo.get_member("swaptotal"),
-            swap_free: meminfo.get_member("swapfree"),
-            dirty: meminfo.get_member("dirty"),
-            writeback: meminfo.get_member("writeback"),
-            anon_pages: meminfo.get_member("anonpages"),
-            mapped: meminfo.get_member("mapped"),
-            shmem: meminfo.get_member("shmem"),
-            k_reclaimable: meminfo.get_member("kreclaimable"),
-            slab: meminfo.get_member("slab"),
-            s_reclaimable: meminfo.get_member("sreclaimable"),
-            s_unreclaim: meminfo.get_member("sunreclaim"),
-            kernel_stack: meminfo.get_member("kernelstack"),
-            page_tables: meminfo.get_member("pagetables"),
-            nfs_unstable: meminfo.get_member("nfs_unstable"),
-            bounce: meminfo.get_member("bounce"),
-            writeback_tmp: meminfo.get_member("writebacktmp"),
-            commit_limit: meminfo.get_member("commitlimit"),
-            committed_as: meminfo.get_member("committed_as"),
-            vmalloc_total: meminfo.get_member("vmalloctotal"),
-            vmalloc_used: meminfo.get_member("vmallocused"),
-            vmalloc_chunk: meminfo.get_member("vmallocchunk"),
-            percpu: meminfo.get_member("percpu"),
-            hardware_corrupted: meminfo.get_member("hardwarecorrupted"),
-            anon_huge_pages: meminfo.get_member("anonhugepages"),
-            shmem_huge_pages: meminfo.get_member("shmemhugepages"),
-            shmem_pmd_mapped: meminfo.get_member("shmempmdmapped"),
-            file_huge_pages: meminfo.get_member("filehugepages"),
-            file_pmd_mapped: meminfo.get_member("filepmdmapped"),
-            cma_total: meminfo.get_member("cmatotal"),
-            cma_free: meminfo.get_member("cmafree"),
-            huge_pages_total: meminfo.get_member("hugepages_total"),
-            huge_pages_free: meminfo.get_member("hugepages_free"),
-            huge_pages_rsvd: meminfo.get_member("hugepages_rsvd"),
-            huge_pages_surp: meminfo.get_member("hugepages_surp"),
-            hugepagesize: meminfo.get_member("hugepagesize"),
-            hugetlb: meminfo.get_member("hugetlb"),
-            direct_map4k: meminfo.get_member("directmap4k"),
-            direct_map2m: meminfo.get_member("directmap2m"),
-            direct_map1g: meminfo.get_member("directmap1g"),
+            mem_total: meminfo.get_from_str("memtotal"),
+            mem_free: meminfo.get_from_str("memfree"),
+            mem_available: meminfo.get_from_str("memavailable"),
+            buffers: meminfo.get_from_str("buffers"),
+            cached: meminfo.get_from_str("cached"),
+            swap_cached: meminfo.get_from_str("swapcached"),
+            active: meminfo.get_from_str("active"),
+            inactive: meminfo.get_from_str("inactive"),
+            active_anon: meminfo.get_from_str("active_anon"),
+            inactive_anon: meminfo.get_from_str("inactive_anon"),
+            active_file: meminfo.get_from_str("active_file"),
+            inactive_file: meminfo.get_from_str("inactive_file"),
+            unevictable: meminfo.get_from_str("unevictable"),
+            mlocked: meminfo.get_from_str("mlocked"),
+            swap_total: meminfo.get_from_str("swaptotal"),
+            swap_free: meminfo.get_from_str("swapfree"),
+            dirty: meminfo.get_from_str("dirty"),
+            writeback: meminfo.get_from_str("writeback"),
+            anon_pages: meminfo.get_from_str("anonpages"),
+            mapped: meminfo.get_from_str("mapped"),
+            shmem: meminfo.get_from_str("shmem"),
+            k_reclaimable: meminfo.get_from_str("kreclaimable"),
+            slab: meminfo.get_from_str("slab"),
+            s_reclaimable: meminfo.get_from_str("sreclaimable"),
+            s_unreclaim: meminfo.get_from_str("sunreclaim"),
+            kernel_stack: meminfo.get_from_str("kernelstack"),
+            page_tables: meminfo.get_from_str("pagetables"),
+            nfs_unstable: meminfo.get_from_str("nfs_unstable"),
+            bounce: meminfo.get_from_str("bounce"),
+            writeback_tmp: meminfo.get_from_str("writebacktmp"),
+            commit_limit: meminfo.get_from_str("commitlimit"),
+            committed_as: meminfo.get_from_str("committed_as"),
+            vmalloc_total: meminfo.get_from_str("vmalloctotal"),
+            vmalloc_used: meminfo.get_from_str("vmallocused"),
+            vmalloc_chunk: meminfo.get_from_str("vmallocchunk"),
+            percpu: meminfo.get_from_str("percpu"),
+            hardware_corrupted: meminfo.get_from_str("hardwarecorrupted"),
+            anon_huge_pages: meminfo.get_from_str("anonhugepages"),
+            shmem_huge_pages: meminfo.get_from_str("shmemhugepages"),
+            shmem_pmd_mapped: meminfo.get_from_str("shmempmdmapped"),
+            file_huge_pages: meminfo.get_from_str("filehugepages"),
+            file_pmd_mapped: meminfo.get_from_str("filepmdmapped"),
+            cma_total: meminfo.get_from_str("cmatotal"),
+            cma_free: meminfo.get_from_str("cmafree"),
+            huge_pages_total: meminfo.get_from_str("hugepages_total"),
+            huge_pages_free: meminfo.get_from_str("hugepages_free"),
+            huge_pages_rsvd: meminfo.get_from_str("hugepages_rsvd"),
+            huge_pages_surp: meminfo.get_from_str("hugepages_surp"),
+            hugepagesize: meminfo.get_from_str("hugepagesize"),
+            hugetlb: meminfo.get_from_str("hugetlb"),
+            direct_map4k: meminfo.get_from_str("directmap4k"),
+            direct_map2m: meminfo.get_from_str("directmap2m"),
+            direct_map1g: meminfo.get_from_str("directmap1g"),
         }
     }
 }
@@ -135,10 +124,12 @@ impl MemInfo {
 fn get_meminfo() -> Result<HashMap<String, i64>, std::io::Error> {
     let mut meminfo: HashMap<String, i64> = HashMap::new();
     let contents = read_to_string("/proc/meminfo")?;
+
     for line in contents.split("\n") {
         let mut line = line.split(":");
         let key = line.next();
         let value = line.next();
+
         match (key, value) {
             (Some(k), Some(v)) => {
                 let k = k
@@ -159,5 +150,6 @@ fn get_meminfo() -> Result<HashMap<String, i64>, std::io::Error> {
             _ => {}
         }
     }
+
     Ok(meminfo)
 }
